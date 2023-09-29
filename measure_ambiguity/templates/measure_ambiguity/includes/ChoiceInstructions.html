@@ -1,0 +1,29 @@
+{% extends 'measure_ambiguity/includes/Choice.html' %}
+
+{% block styles %}
+    {{ block.super }}
+
+    <style>
+        .label-buttons {
+            pointer-events: none;
+        }
+    </style>
+{% endblock %}
+
+{% block blower %}
+{% endblock %}
+
+{% block bingo-proportions %}
+{% endblock %}
+
+{% block A-buttons %}
+    <label class="label-buttons btn btn-outline-primary py-0 A-buttons {% if forloop.counter <= 12 %}active{% endif %}">
+        A
+    </label>
+{% endblock %}
+
+{% block B-buttons %}
+    <label class="label-buttons btn btn-outline-primary py-0 {% if forloop.counter > 12 %}active{% endif %}">
+        B
+    </label>
+{% endblock %}

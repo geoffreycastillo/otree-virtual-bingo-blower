@@ -1,0 +1,66 @@
+{% load otree %}
+
+{% block styles %}
+    {{ block.super }}
+
+    <style>
+        .table .state {
+            background-color: white;
+        }
+
+        .option-A, .option-B {
+            width: 40%;
+        }
+
+        .A-B-buttons {
+            width: 10%;
+        }
+    </style>
+{% endblock %}
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead class="">
+        <tr>
+            <th class="option-A align-top text-center" scope="col">
+                Option A <br>
+                You win {{ Constants.payoff | c }} if
+                {% block optionA_description %}
+                {% endblock %}
+            </th>
+            <th class="A-B-buttons align-top text-center" scope="col">
+                Your choice
+            </th>
+            <th class="option-B align-top text-center" scope="col">
+                Option B <br>
+                You win {{ Constants.payoff | c }} with the following chance:
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for probability in probabilities %}
+            <tr>
+                {% if forloop.first %}
+                    <td class="state p-0 m-0" rowspan="0">
+                        <div class="sticky-top">
+                                {% block optionA %}
+                                {% endblock %}
+                        </div>
+                    </td>
+                {% endif %}
+                <td class="choice-A-B py-0 text-center">
+                    <div class="btn-group btn-group-toggle choice-A-B-buttons" id="{{ forloop.counter0 }}" data-toggle="buttons">
+                        {% block A-buttons %}
+                        {% endblock %}
+                        {% block B-buttons %}
+                        {% endblock %}
+                    </div>
+                </td>
+                <td class="probability p-0 text-center align-middle">
+                    {{ probability }} %
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

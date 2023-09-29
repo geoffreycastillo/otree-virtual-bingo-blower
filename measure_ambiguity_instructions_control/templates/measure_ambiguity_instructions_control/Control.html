@@ -1,0 +1,53 @@
+{% extends "global/BBPage.html" %}
+{% load otree static %}
+
+{% block scripts %}
+
+    {% if participant.vars.event == 'blower' %}
+
+        {{ block.super }}
+
+        <script>
+            let blower = new BingoBlower();
+            blower.addBalls({{ num_balls | json }});
+        </script>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block title %}
+    Control questions
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        To test your understanding we have designed the following control questions.</p>
+
+
+    <p>
+        Imagine one of the questions is as follows:
+    </p>
+
+
+    {% include 'measure_ambiguity/includes/ChoiceInstructions.html' %}
+
+    <p>
+        Imagine further that this question is selected for payment at the end of the experiment.
+    </p>
+
+    {% formfield player.control_question_A_or_B_10 %}
+
+    {% formfield player.control_question_if_A_10 label=label %}
+
+    {% formfield player.control_question_A_or_B_60 %}
+
+    {% formfield player.control_question_if_B_60 label=label %}
+
+    <div class="card-body">
+        {% next_button %}
+    </div>
+
+{% endblock %}

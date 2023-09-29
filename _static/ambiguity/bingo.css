@@ -1,0 +1,17 @@
+@keyframes reveal {
+    from {
+        filter: blur(100px);
+    }
+    to {
+        filter: blur(0px);
+    }
+}
+
+#world {
+    display: block;
+    animation-name: reveal;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    width: 100%;
+    height: auto;
+}

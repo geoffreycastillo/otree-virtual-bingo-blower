@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block scripts %}
+    {{ block.super }}
+
+    <script src="{% static 'ambiguity/ua-parser.min.js' %}"></script>
+
+    <script>
+        let parser = new UAParser();
+        let result = parser.getResult();
+        document.getElementById('browser_name').value = result.browser.name;
+        document.getElementById('browser_version').value = result.browser.version;
+        document.getElementById('os_name').value = result.os.name;
+        document.getElementById('os_version').value = result.os.version;
+        document.getElementById('device').value = result.device.type;
+    </script>
+
+    <script>
+        let previousTimestamp, divFPS;
+
+        const raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+        let frame = 0;
+        const rafLoop = timestamp => {
+            frame++;
+            let interval = timestamp - previousTimestamp;
+            document.getElementById('fps').value = Math.round(1000 / interval);
+            previousTimestamp = timestamp;
+            if (frame < 200) {
+                raf(rafLoop);
+            }
+        };
+
+        // This is run first to set the previousTimestamp variable with an initial value, and then call the rafLoop function.
+        raf(timestamp => {
+            previousTimestamp = timestamp;
+            raf(rafLoop);
+        });
+    </script>
+
+{% endblock %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Thank you for agreeing to take part in our study.
+    </p>
+
+    <input type="hidden" name="browser_name" id="browser_name"/>
+    <input type="hidden" name="browser_version" id="browser_version"/>
+    <input type="hidden" name="device" id="device"/>
+    <input type="hidden" name="os_name" id="os_name"/>
+    <input type="hidden" name="os_version" id="os_version"/>
+    <input type="hidden" name="fps" id="fps"/>
+
+
+    {% next_button %}
+
+{% endblock %}
+
+

@@ -1,0 +1,65 @@
+{% extends 'measure_ambiguity/includes/ChoiceHelper.html' %}
+{% load otree %}
+
+{% block optionA_description %}
+    {% if participant.vars.event == 'blower' %}
+        one of the following balls is drawn:
+    {% elif participant.vars.event == 'dow' %}
+        the Dow evolves in one of the following ways:
+    {% endif %}
+{% endblock %}
+
+{% block optionA %}
+    {% if participant.vars.event == 'blower' %}
+        <div class="wrapper d-flex justify-content-center align-items-end p-0 m-0">
+            <div class="cell">
+                <span class="state-1 {% if state.0 %} ball {% endif %}"></span>
+            </div>
+            <div class="cell">
+                <div class="state-2 {% if state.1 %} ball {% endif %}"></div>
+            </div>
+            <div class="cell">
+                <div class="state-3 {% if state.2 %} ball {% endif %}"></div>
+            </div>
+        </div>
+
+        {% block blower %}
+            <div class="my-3">
+                <canvas class="blower" id="world"></canvas>
+            </div>
+        {% endblock %}
+
+
+        {% block bingo-proportions %}
+            {% if participant.vars.show_proportions|default_if_none:False %}
+                <p>
+                    In this Bingo-Blower there are:
+                </p>
+
+                <ul class="my-0 py-0">
+                    {% for proportion in proportions %}
+                        <li>{{ proportion.0 }} {{ proportion.1 }} balls ({{ proportion.2 }}%)</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endblock %}
+    {% elif participant.vars.event == 'dow' %}
+        <ul class="mt-4">
+            {% if state.0 %}
+                <li>
+                    The Dow {{ Constants.DOW_states.0 }}
+                </li>
+            {% endif %}
+            {% if state.1 %}
+                <li>
+                    The Dow {{ Constants.DOW_states.1 }}
+                </li>
+            {% endif %}
+            {% if state.2 %}
+                <li>
+                    The Dow {{ Constants.DOW_states.2 }}
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock %}

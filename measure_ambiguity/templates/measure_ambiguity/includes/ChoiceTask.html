@@ -1,0 +1,13 @@
+{% extends 'measure_ambiguity/includes/Choice.html' %}
+
+{% block A-buttons %}
+    <label class="btn btn-outline-primary py-0 A-buttons">
+        <input type="radio" name="choice" id="{{ forloop.counter0 }}-A" autocomplete="off" value="A"> A
+    </label>
+{% endblock %}
+
+{% block B-buttons %}
+    <label class="btn btn-outline-primary py-0">
+        <input type="radio" name="choice" id="{{ forloop.counter0 }}-B" autocomplete="off" value="B"> B
+    </label>
+{% endblock %}

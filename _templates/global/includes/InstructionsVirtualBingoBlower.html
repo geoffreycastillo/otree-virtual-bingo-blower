@@ -1,0 +1,45 @@
+<p class="card-text">
+    You will notice a virtual Bingo Blower below.
+    You can see there are balls of three different colours:
+    {{ Constants.human_colour_states.0|lower }}, {{ Constants.human_colour_states.1|lower }}
+    and {{ Constants.human_colour_states.2|lower }}.
+    It is a real physics simulation and not a pre-recorded video, meaning that we have no control on how the balls move.
+</p>
+
+<p class="card-text">
+    To convince yourself that this Bingo Blower is simulated in real-time,
+    <strong>on this page only</strong>
+    you can manipulate the balls by clicking on one, dragging it and seeing how the other balls react.
+    Later on you will not be able to control the balls to prevent you from affecting the outcome.
+</p>
+
+<p class="card-text">
+    At the end of the experiment, in order to determine a colour, the Bingo Blower will be stopped and the ball closest to the center selected.
+    Since the Bingo Blower is a real physics simulation, we cannot control the colour of the ball drawn.
+</p>
+
+<p class="card-text">
+    You can use the buttons below to see how drawing a ball will work.
+    After you click on 'Draw a ball', the balls keep tumbling for 3 seconds.
+    Thereafter the balls are frozen and the ball closest to the center is chosen.
+    If you want to try drawing a ball multiple times, click on 'Reset the Blower'.
+</p>
+
+<div class="container my-4">
+    <div class="row justify-content-around">
+        <div class="col-auto">
+            <button type="button" class="draw btn btn-primary">Draw a ball</button>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="reset btn btn-primary">Reset the Blower</button>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <canvas class="mx-auto blower" id="world"></canvas>
+</div>
+
+<p>
+    The ball drawn is: <strong><span id="ballDrawnColour"></span></strong>
+</p>

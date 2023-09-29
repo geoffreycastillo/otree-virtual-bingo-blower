@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Thank you!
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        You may contact us (<a href="mailto:ola.andersson@nek.uu.se">Ola Andersson</a>,
+        <a href="mailto:geoffrey.castillo@univie.ac.at">Geoffrey Castillo</a>,
+        <a href="mailto:Erik Wengström">Erik Wengström</a>)
+        if you have any questions about this study.
+    </p>
+
+    <p>Your completion code is:</p>
+
+    <p class="text-center display-4">{{ session.config.completion_code }}</p>
+
+    <p>To record your participation as complete on Prolific, please follow the following URL:</p>
+
+    <p class="text-center h5"><a href="https://app.prolific.co/submissions/complete?cc={{ session.config.completion_code }}">https://app.prolific.co/submissions/complete?cc={{ session.config.completion_code }}</a></p>
+
+{% endblock %}
+
+

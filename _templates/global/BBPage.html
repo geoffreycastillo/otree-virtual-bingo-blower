@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block scripts %}
+    <script src="{% static 'ambiguity/matter.min.js' %}"></script>
+    <script src="{% static 'ambiguity/matter-attractors.min.js' %}"></script>
+    <script src="{% static 'ambiguity/bingo-blower.min.js' %}"></script>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'ambiguity/balls.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="text-center">
+        <canvas class="mx-auto blower" id="world"></canvas>
+    </div>
+
+    {% formfields %}
+
+    {% next_button %}
+
+{% endblock %}

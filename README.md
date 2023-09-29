@@ -1,1 +1,1 @@
-# otree-virtual-bingo-blower
+oTree code for 'Generating ambiguity with a virtual bingo blower' by [Ola Andersson](https://sites.google.com/view/olalandersson), [Geoffrey Castillo](https://geoffreycastillo.com/), and [Erik Wengström](https://sites.google.com/site/erikwengstrom/).

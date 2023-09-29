@@ -1,0 +1,10 @@
+
+.idea/
+
+__pycache__/
+
+__temp_bots_*/
+
+__temp_migrations/
+
+*.sqlite3

@@ -1,0 +1,25 @@
+.ball {
+    display: block;
+    background: black;
+    border-radius: 50%;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.cell {
+    width: 90px;
+    height: 90px;
+    padding: 10px;
+}
+
+.state-1 {
+    background: Red;
+}
+
+.state-2 {
+    background: MediumBlue;
+}
+
+.state-3 {
+    background: Gold;
+}

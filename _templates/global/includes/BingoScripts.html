@@ -1,0 +1,72 @@
+{% load otree %}
+
+{% if session.config.blower == 'virtual' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"
+            integrity="sha256-Bmvb4pJWin8rqq3GnwPz/hxBtqXaMdZHJnHYlpRULa4=" crossorigin="anonymous"></script>
+    <script src="{% static 'ambiguity/matter-wrap.js' %}"></script>
+    <script src="{% static 'ambiguity/matter-attractors.js' %}"></script>
+    <script src="{% static 'ambiguity/bingo-blower.js' %}"></script>
+    <script>
+        let [world, target] = createBlower({{ control }});
+        let allBalls = addBalls(world, [
+            [{{ num_balls.0|default_if_none:session.config.num_balls.0 }}, '{{ Constants.robot_colour_states.0 }}'],
+            [{{ num_balls.1|default_if_none:session.config.num_balls.1 }}, '{{ Constants.robot_colour_states.1 }}'],
+            [{{ num_balls.2|default_if_none:session.config.num_balls.2 }}, '{{ Constants.robot_colour_states.2 }}']]
+        );
+
+        {% if draw_ball|default_if_none:False %}
+            $('.draw').on('click', function () {
+                (async () => {
+                    // disable the buttons
+                    $(".draw").prop('disabled', true);
+                    $(".reset").prop('disabled', true);
+
+                    // draw a ball and get the colour
+                    const colourDrawn = await drawBall(world, target, allBalls, 2);
+                    // retrieve all colours
+                    const colours = {{ Constants.robot_colour_states|json }};
+                    // retrieve the lottery that was selected
+                    const lottery = {{ lottery_chosen|json }};
+
+                    // put the colour name and amount in the html
+                    $('#ballDrawnColour').html(colourDrawn.colourHuman);
+
+                    // re-enable the reset button
+                    $(".reset").prop('disabled', false);
+
+                    // from the colour find out with amount is won
+                    let i = 0;
+                    let amountWon = "";
+                    // Loop over the state colours, extract the index and find back the amount at the same index
+                    for (colour of colours) {
+                        if (colourDrawn.colourRobot == colour) {
+                            amountWon = lottery[i];
+                        }
+                        i++;
+                    }
+
+                    // format the amount of money in js as it is done in django
+                    let formatter = new Intl.NumberFormat('{{ language_code }}', {
+                        style: 'currency',
+                        currency: '{{ currency_code }}',
+                    });
+
+                    amountWonFormatted = formatter.format(amountWon);
+
+                    // put the amount in the html
+                    $('#amountPaid').html(amountWonFormatted);
+
+                    // put it in the hidden field for the database
+                    $("input[name='payoff_draw']").val(amountWon);
+                })();
+            });
+
+            $('.reset').on('click', function () {
+                // re-enable the draw button
+                $(".draw").prop('disabled', false);
+
+                resetBlower(allBalls, target);
+            });
+        {% endif %}
+    </script>
+{% endif %}

@@ -1,0 +1,101 @@
+{% extends "measure_ambiguity_instructions_control/InstructionsHelper.html" %}
+{% load otree static %}
+
+{% block scripts %}
+    {% if participant.vars.event == 'blower' %}
+
+        {{ block.super }}
+
+        <script>
+            let blower = new BingoBlower();
+            blower.addBalls({{ num_balls | json }});
+            blower.addMouseControl();
+
+            $('.draw').on('click', function () {
+                (async () => {
+                    // disable the buttons
+                    $(".draw").prop('disabled', true);
+                    $(".reset").prop('disabled', true);
+
+                    // draw a ball and get the colour
+                    const colourDrawn = await blower.drawBall();
+
+                    // put the colour name and amount in the html
+                    $('#ballDrawnColour').html(colourDrawn.colourHuman);
+
+                    // re-enable the reset button
+                    $(".reset").prop('disabled', false);
+
+                })();
+            });
+
+            $('.reset').on('click', function () {
+                // re-enable the draw button
+                $(".draw").prop('disabled', false);
+                $('#ballDrawnColour').html('');
+                blower.reset();
+            });
+
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+{% block event_description %}
+    {% if participant.vars.event == 'blower' %}
+        <div class="card-body">
+            <h4 class="card-title text-secondary">The Bingo Blower</h4>
+
+            {% include 'global/includes/InstructionsVirtualBingoBlower.html' %}
+        </div>
+    {% elif participant.vars.event == 'dow' %}
+    {% endif %}
+{% endblock %}
+
+{% block optionA %}
+    Option A
+    {% if participant.vars.event == 'blower' %}
+        (Bingo Blower option): you win {{ Constants.payoff }} if the ball drawn from the Bingo Blower is of a certain colour,
+    {% elif participant.vars.event == 'dow' %}
+        (Dow option): you win {{ Constants.payoff }} if the Dow (Dow Jones Industrial Average Index) increases or decreases by
+        some percentages between the opening and closing price on {{ session.vars.DOW_date }},
+    {% endif %} and nothing otherwise.
+{% endblock %}
+
+{% block optionA_question %}
+    In this example, Option A would lead to a gain of {{ Constants.payoff | c }} if
+    {% if participant.vars.event == 'blower' %}
+        the ball drawn from the Bingo Blower is
+        {{ Constants.human_colour_states.0 }} or {{ Constants.human_colour_states.2 }}.
+    {% elif participant.vars.event == 'dow' %}
+        the Dow
+        {{ Constants.DOW_states.0 }} or {{ Constants.DOW_states.2 }}.
+    {% endif %}
+{% endblock %}
+
+{% block end_optionA %}
+    If, on this line, you had selected Option A, you will win {{ Constants.payoff|c }}
+    {% if participant.vars.event == 'blower' %}
+        if the colour of the ball drawn from the Bingo Blower matches one of the colours
+    {% elif participant.vars.event == 'dow' %}
+        if the evolution of the Dow matches one of the descriptions
+    {% endif %}
+    displayed in Option A.
+    {% if participant.vars.event == 'dow' %}
+        We will use  <a href="https://finance.yahoo.com/quote/%5EDJI/history/">historical data from Yahoo Finance (available by clicking on this link)</a>:
+        the opening price is in the column 'Open', and the closing price in the column 'Close*'.
+    {% endif %}
+{% endblock %}
+
+{% block end_optionA_played %}
+    If the line corresponding to 10% was selected, then
+    {% if participant.vars.event == 'blower' %}
+        you would play Option A with the Bingo Blower
+    {% elif participant.vars.event == 'dow' %}
+        we would look at the Dow to play Option A
+    {% endif %}
+    since on that line button 'A' is pressed.
+{% endblock %}

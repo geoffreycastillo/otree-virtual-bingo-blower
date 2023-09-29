@@ -1,0 +1,160 @@
+{% extends "global/BBPage.html" %}
+{% load otree static %}
+
+{% block content %}
+    <div class="card">
+        <h2 class="card-header card-title">
+            Instructions
+        </h2>
+        <div class="card-body">
+            <p class="card-text">
+                Welcome!
+                In this experiment you will be asked to make various decisions.
+                Depending on your decisions you may earn a sizable amount of money that will be paid to you after the experiment.
+                This will be composed of the {{ session.config.participation_fee|c }} participation fee plus your 'earnings' from the outcome of your decisions.
+            </p>
+
+            <p class="card-text">
+                These earnings will depend partly on the decisions you take during the experiment and partly on chance.
+                So you will need to read these instructions carefully.
+            </p>
+
+        </div>
+        <div class="card-body">
+
+            <h4 class="card-title text-secondary">Outline of the experiment</h4>
+
+            <p class="card-text">
+                You will be asked {{ Constants.measure_ambiguity_num_rounds }} questions of the same type.
+                In each question you will be presented with two options, Option A and Option B.
+            </p>
+
+            <p class="card-text">
+                After you have answered all {{ Constants.measure_ambiguity_num_rounds }} questions, one of them will be selected at
+                random, and the Option you chose in this question will be played for real.
+            </p>
+
+            <p class="card-text">
+                Therefore, it is in your interest to answer each question as if that were the question to be played out.
+            </p>
+
+        </div>
+
+        {% block event_description %}
+        {% endblock %}
+
+        <div class="card-body">
+
+            <h4 class="card-title text-secondary">The questions</h4>
+
+            <p class="card-text">
+                In each question you will choose between two options, Option A and Option B:
+            </p>
+
+            <ul>
+                <li>
+                    {% block optionA %}
+                    {% endblock %}
+                </li>
+                <li>
+                    Option B (given chance to win option): you have some chance to win {{ Constants.payoff }}.
+                </li>
+            </ul>
+
+            <p class="card-text">
+                You will be asked to state which one of these two options you prefer for various chances to win in Option B, from 0% to 100%.
+                For example:
+            </p>
+
+            <ul>
+                <li>
+                    If the chance to win in Option B is 100%, you will most likely prefer Option B because you are then guaranteed to win {{ Constants.payoff }}.
+                </li>
+                <li>
+                    If the chance to win in Option B is 0%, you will most likely prefer Option A because you might win something, as
+                    opposed to Option B where there is no chance to win at all.
+                </li>
+            </ul>
+
+            <p class="card-text">
+                You can think of the chance to win as the range of winning numbers in a bag containing numbers between 1 and 100.
+                If the chance to win is 50%, it means you would win if a number between 1 and 50 is drawn from the bag,
+                and you would lose if a number between 51 and 100 is drawn.
+            </p>
+
+        </div>
+
+        <div class="card-body">
+
+            <h4 class="card-title text-secondary">Example question</h4>
+
+            <p>
+                The questions will look like this:
+            </p>
+
+            {% include 'measure_ambiguity/includes/ChoiceInstructions.html' %}
+
+            <p class="card-text">
+                {% block optionA_question %}
+                {% endblock %}
+                Option B is presented with ascending chances to win.
+                For each line we ask you to choose between Option A and Option B.
+            </p>
+
+            <p class="card-text">
+                If you prefer Option A when, for instance, Option B offers a 40% chance to win, then you should also prefer Option A
+                when Option B offers an even lower chance to win, say 25% .
+                Similarly, if you prefer Option B with a 60% chance to win, then you should also prefer Option B with an even
+                better chance to win, say 70%.
+                Accordingly, in the figure above Option A is selected for every chance to win between 0 to 45%,
+                and Option B, for every chance to win between 50% and 100%.
+            </p>
+
+            <p class="card-text">
+                To save you the trouble of clicking for each line, you can click on Option A or Option B for one line
+                and the computer will automatically fill your choices for the other lines.
+                For example, in the figure above, button 'B' has been clicked only for the line corresponding to 50%.
+            </p>
+
+            <p>
+                You can change your choices as many times as you want.
+                Once you are happy with your choices, click the 'Next' button at the bottom.
+                You will not be allowed to go back to a question once you have clicked on the 'Next' button.
+            </p>
+
+
+        </div>
+
+        <div class="card-body">
+
+            <h4 class="card-title text-secondary">Payment</h4>
+
+            <p class="card-text">
+                After you have answered all {{ Constants.measure_ambiguity_num_rounds }} questions, one of them will be randomly selected by the computer.
+                This question will be the question that counts for your payment.
+                Then the computer will also select one of the lines:
+            </p>
+
+            <ul class="card-text">
+                <li>
+                    {% block end_optionA %}
+                    {% endblock %}
+                </li>
+                <li>
+                    If, instead, you had selected Option B, you will play that option.
+                    To do so the computer will randomly draw a number between 0 and 100.
+                    For example if Option B is 'You win {{ Constants.payoff|c }} with a 74% chance' then you will win
+                    {{ Constants.payoff|c }} if the number drawn by the computer is strictly smaller than 74, and you will win nothing if it is equal to
+                    or larger than 75.
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="card-body">
+            {% next_button %}
+        </div>
+
+    </div>
+
+{% endblock %}

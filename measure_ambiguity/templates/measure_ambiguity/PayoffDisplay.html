@@ -1,0 +1,28 @@
+{% extends "measure_ambiguity/Task.html" %}
+{% load otree static %}
+
+{% block title %}
+    Your payment
+{% endblock %}
+
+{% block content %}
+
+    <div class="container px-0 mt-2">
+        <div class="row">
+            <div class="col-8">
+                For this experiment, you have won (including the participation fee
+                of {{ session.config.participation_fee|c }}):
+            </div>
+            <div class="col font-weight-bold">
+                {{ participant.payoff_plus_participation_fee }}
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        {% next_button %}
+    </div>
+
+{% endblock %}
+
+

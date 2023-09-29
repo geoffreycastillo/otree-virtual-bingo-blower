@@ -1,0 +1,29 @@
+<div class="card-body">
+
+    <h4 class="card-title text-secondary">The Bingo Blower</h4>
+
+    {% if session.config.blower == 'real' %}
+        <p class="card-text">
+            You will have noticed a Bingo Blower in the laboratory.
+            In this Blower there are balls of three different colours:
+            {{ Constants.human_colour_states.0|lower }}, {{ Constants.human_colour_states.1|lower }}
+            and {{ Constants.human_colour_states.2|lower }}.
+            The balls are constantly being blown about in the Blower.
+        </p>
+        <p class="card-text">
+            At the end of the experiment, when we come to play out your preferred choice on one of the
+            questions, we will use this Bingo Blower to
+            determine a colour: we will allow you to open the exit chute — this will lead to one ball being
+            expelled.
+            Obviously this expulsion will be done at random as there is no way that you can control the
+            colour of the ball that emerges.
+            The colour of the ball and the lottery that you chose on the question that was selected will
+            determine your payment.
+        </p>
+    {% endif %}
+
+    {% if session.config.blower == 'virtual' %}
+        {% include 'global/includes/InstructionsVirtualBingoBlower.html' %}
+    {% endif %}
+
+</div>

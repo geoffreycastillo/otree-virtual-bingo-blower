@@ -1,0 +1,64 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Consent form
+{% endblock %}
+
+{% block content %}
+
+    <h4>Data collected</h4>
+
+    <p>
+        We will record your answers to a number of questions.
+        We will also record your Prolific ID to be able to pay you later.
+        We will not collect any sensitive data.
+    </p>
+
+    <h4>Use of data</h4>
+
+    <p>
+        The data will be analysed for an academic study.
+    </p>
+
+    <h4>Data storage</h4>
+
+    <p>
+        The data will be stored on our own servers, to which only the researchers involved in this study have access. We will keep your data to use for future
+        research.
+    </p>
+
+    <h4>Anonymity</h4>
+
+    <p>
+        No personally identifiable information will be recorded apart from the Prolific ID.
+        The Prolific ID will only be seen by the researchers involved in this study.
+        We may share your research data with other investigators without asking for your consent again, but it will not contain information that could
+        directly identify you.
+    </p>
+
+    <h4>Voluntary participation</h4>
+
+    <p>It is totally up to you to decide to be in this research study.
+        Participating in this study is voluntary.
+        Even if you decide to be part of the study now, you may change your mind and stop at any time.
+        You do not have to answer any questions you do not want to answer.
+        If you decide to withdraw before this study is completed, please exit and return your submission on Prolific by clicking the 'Stop without completing'
+        button.
+        Your data will be removed from the dataset before analysis begins.</p>
+
+    <h4>Contacting the study team</h4>
+
+    <p>If you have any questions about this research, feel free to write us:
+        Ola Andersson (<a href="mailto:ola.andersson@nek.uu.se">ola.andersson@nek.uu.se</a>),
+        Geoffrey Castillo (<a href="mailto:geoffrey.castillo@univie.ac.at">geoffrey.castillo@univie.ac.at</a>),
+        Erik Wengström (<a href="mailto:erik.wengstrom@nek.lu.se">erik.wengstrom@nek.lu.se</a>).
+    </p>
+
+    <h4> By clicking the button below, you declare that you understand the information above and that you consent to participating in our study.</h4>
+
+    <p>
+        <button class="btn btn-primary" name="consent" value="True">I consent</button>
+    </p>
+
+{% endblock %}
